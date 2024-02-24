@@ -17,6 +17,8 @@ export default function DroneList () {
                 console.log(err);
             });
     }, []);
+    console.log(JSON.stringify(drones));     
+    
     return (
         
         <section id="catalog-page">
@@ -25,11 +27,11 @@ export default function DroneList () {
                 <table>
                     <thead>
                         <tr>
-                            <th>Id | </th>
-                            <th>Type | </th>
-                            <th>Warehouse | </th>
-                            <th>Actual Capacity |  </th>
-                            
+                            <th>Id </th>
+                            <th>Type </th>
+                            <th>Warehouse </th>
+                            <th>Actual Capacity </th>
+                            <th>Battery Charged  </th>
                             <th>Actions</th>
                         </tr>
                     </thead>
@@ -42,7 +44,7 @@ export default function DroneList () {
                     droneType={drone.droneType}
                     warehouseId={drone.warehouseId}  
                     actualCapacity={drone.actualCapacity} 
-                    
+                    batCharge={drone.batCharge} 
                     />
                 
             ))}
