@@ -1,0 +1,27 @@
+{
+  "1": {
+    "_id": 1,
+    "name": "John Stocks",
+    "coordinates" : {
+        "x": 10,
+        "y": 10
+    }
+  },
+  "2": {
+      "_id": 2,
+      "name": "Alfred Derrick",
+      "coordinates" : {
+          "x": 213,
+          "y": 187
+      }
+  },
+  "3": {
+      "_id": 3,
+      "name": "Richard Brune",
+      "coordinates" : {
+          "x": 108,
+          "y": 15
+      }
+  }
+}
+  

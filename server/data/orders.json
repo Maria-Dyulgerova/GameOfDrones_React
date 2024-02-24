@@ -1,0 +1,66 @@
+{
+  "1": {
+    "_id": 1,
+    "customerId": 1,
+    "productList" : {
+        "tomatoes" : 5,
+        "cucumber" : 5,
+        "cheese" : 1,
+        "milk" : 2
+    }
+  },
+  "2": {
+    "_id": 2,
+    "customerId": 1,
+    "productList" : {
+        "eggs" : 10,
+        "cucumber" : 2,
+        "cheese" : 1,
+        "ham" : 2
+    }
+  },
+  "3": {
+    "_id": 3,
+      "customerId": 2,
+      "productList" : {
+          "eggs" : 10,
+          "tomatoes" : 2,
+          "bananas" : 5,
+          "carrots" : 15,
+          "bread" : 2,
+          "onion" : 6
+      }
+  },
+  "4": {
+    "_id": 4,
+      "customerId": 3,
+      "productList" : {
+          "eggs" : 5,
+          "cucumber" : 5,
+          "cheese" : 1,
+          "tomatoes" : 2
+      }
+  },
+  "5": {
+    "_id": 5,
+      "customerId": 3,
+      "productList" : {
+          "eggs" : 10,
+          "tomatoes" : 2,
+          "ham" : 1,
+          "bananas" : 2
+      }
+  },
+  "6": {
+    "_id": 6,
+      "customerId": 2,
+      "productList" : {
+          "bananas" : 10,
+          "carrots" : 2,
+          "onion" : 5,
+          "cucumber" : 15,
+          "cheese" : 2,
+          "bread" : 6
+      }
+  }
+}

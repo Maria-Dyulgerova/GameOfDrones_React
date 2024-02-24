@@ -1,0 +1,17 @@
+{
+    "1": {
+        "_id": "1",
+        "capacity" : "500W",
+        "consumption" : "1W"
+    },
+    "2": {
+        "_id": "2",
+        "capacity" : "1kW",
+        "consumption" : "3W"
+    },
+    "3": {
+        "_id": "3",
+        "capacity" : "2kW",
+        "consumption" : "5W"
+    }   
+}
