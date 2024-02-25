@@ -7,10 +7,10 @@ import * as customerService from "./customersService";
 export const addDetailsToOrders = async () => {
     const detailedOrderList = orderService.buildOrderDetailedList();
     let droneFilteredList = await findMostSuitableDron("1", 23);
-    console.log(droneFilteredList);
+    // console.log(droneFilteredList);
     let warehouise = await warehouseService.setWhStartTime("1", "00:00");
-    console.log(warehouise);
-    let droneToChange = await droneService.calculateActualCapacity(droneFilteredList, 23);
+    // console.log(warehouise);
+    let droneToChange = await droneService.calculateActualCapacity(droneFilteredList._id, 23);
     return droneFilteredList;
 }
 export const addCoordinatesToOrders = async () => {

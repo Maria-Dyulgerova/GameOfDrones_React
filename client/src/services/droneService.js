@@ -11,9 +11,9 @@ export const getAll = async () => {
     return Object.values(result);
 };
 export const getOne = async (drone_id) => {
-    console.log(drone_id);
+    // console.log(drone_id);
     const result = await request.get(`${baseUrl}/${drone_id}`, );
-    console.log(JSON.stringify(result));
+    // console.log(JSON.stringify(result));
     return result;
 }
 export const create = async (droneData) => {
@@ -67,9 +67,10 @@ export const body_json = {
 //calculate batery and actual capacity
 
 export const calculateActualCapacity = async (droneId, path) => {
+
     const drone = await getOne(droneId);
-    // console.log(JSON.stringify(drone));
-    console.log(droneId);
+    console.log(JSON.stringify(drone));
+    // console.log(droneId);
 }
 
 // export const calculateActualCapacity = async (droneType) => {
