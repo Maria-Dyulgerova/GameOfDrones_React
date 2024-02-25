@@ -53,7 +53,7 @@ export const findMostSuitableDron = async (wh_id, path ) => {
 //warehouseServices
 
 //calculate batery and actual capacity
-
+//droneService
 
 
 //add 5 min to the wh start time

@@ -68,9 +68,22 @@ export const body_json = {
 
 export const calculateActualCapacity = async (droneId, path) => {
 
-    const drone = await getOne(droneId);
-    console.log(JSON.stringify(drone));
-    // console.log(droneId);
+    const droneData = await getOne(droneId);
+    let consumption = await getConsumption(droneData.droneType);
+    let newActualCapacity =  droneData.actualCapacity - path * 2 * consumption;
+    let percentage = (newActualCapacity / droneData.actualCapacity ) * 100;
+    let newBatCharge = (droneData.batCharge * percentage) / 100;
+    const body_json = {
+        _id: droneId,
+        droneType: droneData.droneType,
+        actualCapacity: newActualCapacity,
+        warehouseId: droneData.warehouseId,
+        batCharge: newBatCharge
+    };
+    const result = await edit(droneId, body_json);
+    console.log(JSON.stringify(result));
+    return result;
+
 }
 
 // export const calculateActualCapacity = async (droneType) => {
