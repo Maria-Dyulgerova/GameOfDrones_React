@@ -9,7 +9,7 @@ export default function EstimateOrderList () {
     const [orders, setOrders] = useState([]);
     
     useEffect(() => {
-        queryService.addDetailsToOrders()
+        queryService.startProgramFlow()
             .then(
                 result => {
                     setOrders(result);

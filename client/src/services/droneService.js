@@ -71,7 +71,9 @@ export const body_json = {
 //calculate batery and actual capacity
 
 export const calculateActualCapacity = async (droneId, path) => {
-
+    console.log("calculateActualCapacity(...) -> enter:");
+console.log("droneId" + droneId);
+console.log("path" + path);
     const droneData = await getOne(droneId);
     let consumption = await getConsumption(droneData.droneType);
     let newActualCapacity =  droneData.actualCapacity - path * 2 * consumption;
@@ -87,6 +89,7 @@ export const calculateActualCapacity = async (droneId, path) => {
 
     };
     const result = await edit(droneId, body_json);
+    console.log("calculateActualCapacity(...) -> result:");
     console.log(JSON.stringify(result));
     return result;
 
@@ -157,7 +160,10 @@ export const getDroneDetails = async(droneType) => {
 
 }
 export const getDronesFromWarehouse = async (wh_id) => {
+     
+
     let droneList = await request.get(baseUrl);
+    
     let filteredDroneList = [];
     for(let i in droneList) { 
         // console.log(droneList[i]);
@@ -165,7 +171,7 @@ export const getDronesFromWarehouse = async (wh_id) => {
             filteredDroneList.push(droneList[i]); 
         }
      }; 
-    // console.log(filteredDroneList);
+   console.log(filteredDroneList);
     return filteredDroneList;
 }
 

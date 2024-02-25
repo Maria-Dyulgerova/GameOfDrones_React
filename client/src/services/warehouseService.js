@@ -4,7 +4,7 @@ import * as request from "../lib/request";
 // const baseUrl = 'http://localhost:3030/jsonstore/input_data/warehouses';
 const baseUrl = 'http://localhost:3030/jsonstore/warehouses';
 
-
+export let warehouseTime = 0;
 
 export const getAll = async () => {
     const result = await request.get(baseUrl);
@@ -24,13 +24,13 @@ export const edit = async (warehouse_id, warehouseData) => {
         name: warehouseData.name,
         x: warehouseData.x,
         y: warehouseData.y,
-        startTime: warehouseData.startTime
+        time: warehouseData.time
     };
     const result = await request.put(`${baseUrl}/${warehouse_id}`, body_json);
 
     return result;
 };
-export const setWhStartTime = async (wh_id, startTime) => {
+export const setWarehouseTime = async (wh_id, minPlus) => {
     const warehouse = await getOne(wh_id);
     
     const body_json = {
@@ -38,12 +38,13 @@ export const setWhStartTime = async (wh_id, startTime) => {
         name: warehouse.name,
         x: warehouse.x,
         y: warehouse.y,
-        startTime: startTime
+        time: warehouseTime + minPlus
     };
 
     const refacturedWh = await edit(wh_id, body_json);
+    console.log("setWarehouseTime(...) -> result:");
     console.log(JSON.stringify(refacturedWh));
-    return warehouse;
+    return refacturedWh;
 }
 // export const addDroneToList = async (drone_id, wh_id) => {
     

@@ -55,6 +55,11 @@ export const edit = async (orderId, orderData) => {
         customerId: orderData.customerId,
         productList: orderData.productList,
 
+        path: orderData.path,
+        status: orderData.status,
+        startTime: orderData.startTime,
+        drone: orderData.drone
+
     };
     const result = await request.put(`${baseUrl}/${orderId}`, body_json);
 
@@ -125,22 +130,84 @@ export const findNearestWarehouse = async (xCoordinate, yCoordinate) => {
         let warehouseIndex = paths.indexOf(minPath);
         let data  = [];
         data.push(minPath);
-        data.push(warehouseIndex);
-
+        data.push(warehouseList[warehouseIndex]._id);
+        console.log("findNearestWarehouse(...) -> result:");
+        console.log(JSON.stringify(data));
         return data;
 };
 
-export const changeOrderStatus = async (orderId, statusStr) => {
+export const setOrderPath = async (orderId, path) => {
     const orderData = await getOne(orderId);
+    let startTime = (orderData.startTime == undefined) ? "" : orderData.startTime;
+    let status = (orderData.status == undefined) ? "" : orderData.status;
+    let drone = (orderData.drone == undefined) ? "" : orderData.drone;
     const body_json = {
         _id: orderId,
         customerId: orderData.customerId,
         productList: orderData.productList,
-        status: statusStr
+        path: path,
+        status: orderData.status,
+        startTime: startTime,
+        drone: drone
     };
-
-
-
+    const result = await edit(orderId, body_json);
+    console.log("setOrderPath(...) -> result:");
+    console.log(JSON.stringify(result));
+    return result;
+}
+export const changeOrderStatus = async (orderId, statusStr) => {
+    const orderData = await getOne(orderId);
+    let startTime = (orderData.startTime == undefined) ? "" : orderData.startTime;
+    let path = (orderData.path == undefined) ? "" : orderData.path;
+    let drone = (orderData.drone == undefined) ? "" : orderData.drone;
+    const body_json = {
+        _id: orderId,
+        customerId: orderData.customerId,
+        productList: orderData.productList,
+        path: path,
+        status: statusStr,
+        startTime: startTime,
+        drone: drone
+    };
+    const result = await edit(orderId, body_json);
+    console.log("changeOrderStatus() -> result:");
+    console.log(JSON.stringify(result));
+    return result;
+}
+export const setOrderDrone = async (orderId, droneId) => {
+    const orderData = await getOne(orderId);
+    let startTime = (orderData.startTime == undefined) ? "" : orderData.startTime;
+    let path = (orderData.path == undefined) ? "" : orderData.path;
+    const body_json = {
+        _id: orderId,
+        customerId: orderData.customerId,
+        productList: orderData.productList,
+        path: path,
+        status: orderData.status,
+        startTime: startTime,
+        drone: droneId
+    };
+    const result = await edit(orderId, body_json);
+    console.log("changeOrderDrone(...) -> result:");
+    console.log(JSON.stringify(result));
+    return result;
+}
+export const setOrderStartTime = async (orderId, startTime) => {
+    const orderData = await getOne(orderId);
+    let drone = (orderData.drone == undefined) ? "" : orderData.drone;
+    const body_json = {
+        _id: orderId,
+        customerId: orderData.customerId,
+        productList: orderData.productList,
+        path: orderData.path,
+        status: orderData.status,
+        startTime: startTime,
+        drone: orderData.drone
+    };
+    const result = await edit(orderId, body_json);
+    console.log("setOrderStartTime(...) -> result:");
+    console.log(JSON.stringify(result));
+    return result;
 }
 
 // export const editOrderStatusSend = async (orderId, orderData, path) => {
