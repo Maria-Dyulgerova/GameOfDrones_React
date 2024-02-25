@@ -6,8 +6,10 @@ import * as customerService from "./customersService";
 
 export const addDetailsToOrders = async () => {
     const detailedOrderList = orderService.buildOrderDetailedList();
-    let droneFilteredList = await findMostSuitableDron("1");
-
+    let droneFilteredList = await findMostSuitableDron("1", 23);
+    console.log(droneFilteredList);
+    let warehouise = await warehouseService.setWhStartTime("1", "00:00");
+    console.log(warehouise);
     return droneFilteredList;
 }
 export const addCoordinatesToOrders = async () => {
@@ -23,28 +25,32 @@ const estimateStartTime = "00:00";
     
 //get first order
 
-//find nearest wh
-
-
-
-//find path
+// find nearest wh
+// find path
+// orderServices
 
 //find the most suitable dron. the one with the closest capacity
 export const findMostSuitableDron = async (wh_id, path ) => {
     const droneList = await droneService.getDronesFromWarehouse(wh_id);
     console.log(JSON.stringify(droneList));
-
+    let capacityDroneList = [];
     for(let i in droneList) { 
-        // console.log(droneList[i]);
+        // console.log(droneList[i].actualCapacity);
         if (droneList[i].actualCapacity > path) {
-            filteredDroneList.push([i,droneList[i]]); 
+            capacityDroneList.push(droneList[i].actualCapacity); 
         }
      }; 
+    let closestCapacity = Math.min(...capacityDroneList);
+    let droneIndex = capacityDroneList.indexOf(closestCapacity);
+        
 
-    return droneList;
+    console.log(droneIndex);
+    return droneIndex;
 }
 
 //set wh start time
+
+
 //calculate batery and actual capacity
 
 //add 5 min to the wh start time

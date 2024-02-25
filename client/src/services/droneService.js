@@ -120,7 +120,7 @@ export const getDronesFromWarehouse = async (wh_id) => {
     for(let i in droneList) { 
         // console.log(droneList[i]);
         if (droneList[i].warehouseId == wh_id) {
-            filteredDroneList.push([i,droneList[i]]); 
+            filteredDroneList.push(droneList[i]); 
         }
      }; 
     // console.log(filteredDroneList);

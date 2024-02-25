@@ -18,9 +18,32 @@ export const getOne = async (warehouse_id) => {
 
     return result;
 }
-export const findMostSuitableDron = async (wh_id, xOrder, yOrder) => {
-    let droneId = "";
+export const edit = async (warehouse_id, warehouseData) => {
+    const body_json = {
+        _id: warehouse_id,
+        name: warehouseData.name,
+        x: warehouseData.x,
+        y: warehouseData.y,
+        startTime: warehouseData.startTime
+    };
+    const result = await request.put(`${baseUrl}/${warehouse_id}`, body_json);
+
+    return result;
+};
+export const setWhStartTime = async (wh_id, startTime) => {
+    const warehouse = await getOne(wh_id);
     
+    const body_json = {
+        _id: wh_id,
+        name: warehouse.name,
+        x: warehouse.x,
+        y: warehouse.y,
+        startTime: startTime
+    };
+
+    const refacturedWh = await edit(wh_id, body_json);
+    console.log(JSON.stringify(refacturedWh));
+    return warehouse;
 }
 // export const addDroneToList = async (drone_id, wh_id) => {
     
