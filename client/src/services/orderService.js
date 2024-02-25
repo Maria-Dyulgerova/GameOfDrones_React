@@ -209,57 +209,30 @@ export const setOrderStartTime = async (orderId, startTime) => {
     console.log(JSON.stringify(result));
     return result;
 }
-
-// export const editOrderStatusSend = async (orderId, orderData, path) => {
-//     const body_json = {
-//         _id: orderData._id,
-//         hCoordinate: orderData.hCoordinate,
-//         vCoordinate: orderData.vCoordinate,
-//         load: orderData.load,
-//         status: "started",
-//         startTime: new Date().toISOString(),
-//         estimate: packingTime + unitsPerMin * path * 2,
-//         endTime: "0"
-//     };
-//     const result = await request.put(`${baseUrl}/${orderId}`, body_json);
-
-//     // console.log(result);
-//     return result;
-// };
-
-// export const toLogOrderSent = async (order_id, drone_id, warehouse_id, estimate) => {
-//     const body_json = {
-//         order_id: order_id,
-//         drone_id: drone_id,
-//         warehouse_id: warehouse_id,
-//         estimate: estimate,
-//         status: "sent"
-//     };
-
-       
-//     const result = await request.post(baseLogUrl, body_json);
-
-//     return result;
-// }
-// export const getRecsFromLog = async() => {
-//     const result = await request.get(baseLogUrl);
-
-//     return Object.values(result);    
-// }
-
-// export const remove = async (orderId) => request.remove(`${baseUrl}/${orderId}`);
-
-// export function buildJsonBody(orderData) {
-//     // console.log(artistData);
-//     const body_json = {
-//         _id: orderData._id,
-//         hCoordinate: orderData.hCoordinate,
-//         vCoordinate: orderData.vCoordinate,
-//         load: orderData.load,
-//         state: orderData.state,
-//         startTime: orderData.startTime,
-//         endTime: orderData.endTime,
-//     };
+export const getDeliveredOrders = async (timeInMin) => {
+    let orderList = await getAll();
+    let deliveredOrdersList = [];
+    let dronesToReceiveList = [];
+    for (let i = 0; i < orderList.length; i ++) {
+        if ((orderList[i].startTime != undefined) && (orderList[i].startTime != "")) {
+            console.log(orderList[i].startTime);
+            if (orderList[i].startTime + orderList[i].path * 2 < timeInMin) {
+                deliveredOrdersList.push(orderList[i]);
+                dronesToReceiveList.push(orderList[i].drone);
+            }
+            
+        }
+        
+    }
+    let data = [];
+    if (dronesToReceiveList.length > 0) {
+        
+        data.push(deliveredOrdersList);
+        data.push(dronesToReceiveList);
+        
+    }
+    console.log("getDeliveredOrders(...) -> data:");
+    console.log(JSON.stringify(data));
+    return data;
     
-//     return body_json;
-// };
+}

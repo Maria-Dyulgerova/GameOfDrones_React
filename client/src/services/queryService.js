@@ -4,29 +4,13 @@ import * as warehouseService from "./warehouseService";
 import * as customerService from "./customersService";
 
 
-export const addDetailsToOrders = async () => {
-    const detailedOrderList = orderService.buildOrderDetailedList();
-    // let droneFilteredList = await findMostSuitableDron("1", 23);
-    // // console.log(droneFilteredList);
-    // let warehouise = await warehouseService.setWhStartTime("1", "00:00");
-    // console.log(warehouise);
-    // let droneToChange = await droneService.calculateActualCapacity(droneFilteredList._id, 23);
-    // droneToChange = await droneService.changeStatus(droneFilteredList._id, "busy");
-    // let orderToChange = await orderService.changeOrderStatus(1, 'currently in delivery');
-    // orderToChange = await orderService.setOrderPath(1, 23);
-    return detailedOrderList;
-}
-export const addCoordinatesToOrders = async () => {
-    const CoordinatesOrderList = orderService.buildOrderCoordinatesList();
-    return CoordinatesOrderList;
-}
 
 
 
 //set start time from what comes from input
-const estimateGeneralStartTime = "00:00";
+export const estimateGeneralStartTime = "00:00";
 //this comes also from input
-const timeIntervalInMins = 120;
+export const timeIntervalInMins = 120;
 
 
 export const startProgramFlow = async () => {
@@ -35,7 +19,7 @@ export const startProgramFlow = async () => {
     let nearestWarehouseData = [];
     let drone = {};
     let packingTime = 5;
-    for (let i = 3; i < orderList.length; i ++) {
+    for (let i = 0; i < orderList.length; i ++) {
         orderDetails = await orderService.getDetails(orderList[i]._id);
         
         nearestWarehouseData = await orderService.findNearestWarehouse(orderDetails.coordinates.x, orderDetails.coordinates.y);
@@ -53,30 +37,31 @@ export const startProgramFlow = async () => {
             orderToChange = await orderService.setOrderStartTime(orderList[i]._id, warehouse.time + packingTime);
         } else {
             console.log('startProgramFlow: NO Drones available');
-
-            //charge drones
+            //find delivered orders by endTime
+            let deliveredOrdersData = await orderService.getDeliveredOrders(timeIntervalInMins);
+            let deliveredOrdersList = deliveredOrdersData[0];
+            let dronesToReceiveList = deliveredOrdersData[1];
+    
+            //check if they have enough capacity to make the delivery
+            let dronesWithCapacity = [];
+            console.log(nearestWarehouseData[0]);
+            let availableDronesList = await droneService.checkAvailability(deliveredOrdersData[1], nearestWarehouseData[0]);
+            
+            //charge drones and return the first ready with 100% batCharge
+            //charge all other drones with same percentage like the first ready
+            //add returned time for the first ready drone min to wearhouseTime
+            
         }
         
+
         // break;
+
     }
-    
-    
-    
-    
-    // let warehouise = await warehouseService.setWarehouseTime("1", 0);
-    // console.log(warehouise);
-    // let droneToChange = await droneService.calculateActualCapacity(drone._id, 23);
-    // droneToChange = await droneService.changeStatus(droneFilteredList._id, "busy");
-    // let orderToChange = await orderService.changeOrderStatus(1, 'currently in delivery');
-    // orderToChange = await orderService.setOrderPath(1, 23);
-    // orderToChange = await orderService.setOrderDrone(1, 3);
+    let ordersWithStatusList = await orderService.getAll();
+    return ordersWithStatusList;
 }
     
-//get first order
 
-// find nearest wh
-// find path
-// orderServices
 
 //find the most suitable dron. the one with the closest capacity
 export const findMostSuitableDron = async (wh_id, path ) => {
@@ -128,24 +113,21 @@ export const findMostSuitableDron = async (wh_id, path ) => {
 
 
     
-// export const getNearestWarehouse = async (xCoordinate, yCoordinate) => {
-//     const warehouseList = await warehouseService.getAll();
-//     console.log(JSON.stringify(warehouseList));
-    
-//         let paths = [];
-//         let horPath, vertPath = 0;
-//         for (let i = 0; i < warehouseList.length; i ++) {
-//             horPath = Math.abs(warehouseList[i].x - xCoordinate);
-//             vertPath = Math.abs(warehouseList[i].y - yCoordinate);
-//             paths[i] = horPath + vertPath;   
-//         }
-//         console.log(JSON.stringify(paths));
-//         let minPath = Math.min(...paths);
-//         let warehouseIndex = paths.indexOf(minPath);
-//         let data  = [];
-//         data.push(minPath);
-//         data.push(warehouseIndex);
+export const addDetailsToOrders = async () => {
+    const detailedOrderList = orderService.buildOrderDetailedList();
+    // let droneFilteredList = await findMostSuitableDron("1", 23);
+    // // console.log(droneFilteredList);
+    // let warehouise = await warehouseService.setWhStartTime("1", "00:00");
+    // console.log(warehouise);
+    // let droneToChange = await droneService.calculateActualCapacity(droneFilteredList._id, 23);
+    // droneToChange = await droneService.changeStatus(droneFilteredList._id, "busy");
+    // let orderToChange = await orderService.changeOrderStatus(1, 'currently in delivery');
+    // orderToChange = await orderService.setOrderPath(1, 23);
+    return detailedOrderList;
+}
+export const addCoordinatesToOrders = async () => {
+    const CoordinatesOrderList = orderService.buildOrderCoordinatesList();
+    return CoordinatesOrderList;
+}
 
-//         return data;
-// };
 

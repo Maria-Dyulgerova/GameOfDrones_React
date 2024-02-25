@@ -113,20 +113,7 @@ export const changeStatus = async (droneId, statusStr) => {
 
 }
 
-// export const calculateActualCapacity = async (droneType) => {
-    
-//     const droneDetails = await getDroneDetails(droneType);
-//     let capacity = getCapacityInWats(droneDetails.capacity);
 
-//     let consumption = numbFromString(droneDetails.consumption);
-
-//     return capacity;
-//     // get capacity, power consumption
-//     // .replace(/[^0-9]/g, '')
-//     //  get batCharge 
-
-    
-// }
 
 export const getDroneDetails = async(droneType) => {
     // console.log("getDroneDetails");
@@ -174,18 +161,30 @@ export const getDronesFromWarehouse = async (wh_id) => {
    console.log(filteredDroneList);
     return filteredDroneList;
 }
+export const chargeBateries = async (droneList) => {
+    console.log(JSON.stringify(droneList))
+    //return droneId, time
+}
+export const checkAvailability = async (droneList, path) => {
 
-// export const setBatteryCharge = async (drone_id, batChargePercentage) => {
-//     const droneData = await getOne(drone_id);
-//     const body_json = {
-//         _id: droneData._id,
-//         droneType: droneData.droneType,
-//         actualCapacity: droneData.actualCapacity,
-//         warehouseId: droneData.warehouseId,
-//         batCharge: batChargePercentage
-//     };
+    let droneListFull = await getAll();
+    let availableDronesList = [];
+    for (let i = 0; i < droneListFull.length; i ++) {
+        console.log(droneListFull[i].actualCapacity > path * 2);
+        for (let j = 0; j < droneList.length; j ++) {
+            if ((droneList[j] == droneListFull[i]._id) && (droneListFull[i].actualCapacity > path * 2)) {
+                availableDronesList.push(droneListFull[i]);
+                
+            }
+        }
+    }
+    console.log("checkAvailability() -> result:");
+    
+    console.log(JSON.stringify(droneList));
+    //return droneId, time
+    return availableDronesList;
+}
 
-// }
 function convertInWats(inputCapacity) {
     let units = symbFromString(inputCapacity);
     console.log(numbFromString(inputCapacity));
