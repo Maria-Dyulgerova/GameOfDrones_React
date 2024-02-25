@@ -1,11 +1,6 @@
 import { useEffect, useState } from "react";
 
-import { Link, useNavigate } from "react-router-dom";
-
 import * as orderService from "../../services/orderService";
-
-import Path from '../../paths';
-
 
 
 
@@ -15,8 +10,6 @@ export default function EstimateOrderListItem({
     productList, 
     status
 }) {
-
-    const navigate = useNavigate();
     const [orderMoreDetails, setOrderMoreDetails] = useState({});
     
     let statusStr = (status === undefined) ? "to be delivered" : status;

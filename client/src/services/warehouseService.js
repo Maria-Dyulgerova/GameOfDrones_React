@@ -18,7 +18,10 @@ export const getOne = async (warehouse_id) => {
 
     return result;
 }
-
+export const findMostSuitableDron = async (wh_id, xOrder, yOrder) => {
+    let droneId = "";
+    
+}
 // export const addDroneToList = async (drone_id, wh_id) => {
     
 // }

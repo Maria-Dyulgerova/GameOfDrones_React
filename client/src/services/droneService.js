@@ -1,6 +1,6 @@
 import * as request from "../lib/request";
 
-
+import * as warehouseServices from "./warehouseService";
 const baseUrl = 'http://localhost:3030/jsonstore/drones';
 const droneTypesUrl = 'http://localhost:3030/jsonstore/drone_types';
 
@@ -113,6 +113,18 @@ export const getDroneDetails = async(droneType) => {
     
     return droneData;
 
+}
+export const getDronesFromWarehouse = async (wh_id) => {
+    let droneList = await request.get(baseUrl);
+    let filteredDroneList = [];
+    for(let i in droneList) { 
+        // console.log(droneList[i]);
+        if (droneList[i].warehouseId == wh_id) {
+            filteredDroneList.push([i,droneList[i]]); 
+        }
+     }; 
+    // console.log(filteredDroneList);
+    return filteredDroneList;
 }
 
 // export const setBatteryCharge = async (drone_id, batChargePercentage) => {
