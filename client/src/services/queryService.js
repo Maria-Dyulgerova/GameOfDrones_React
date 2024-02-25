@@ -9,7 +9,7 @@ export const addDetailsToOrders = async () => {
     let droneFilteredList = await findMostSuitableDron("1", 23);
     // console.log(droneFilteredList);
     let warehouise = await warehouseService.setWhStartTime("1", "00:00");
-    // console.log(warehouise);
+    console.log(warehouise);
     let droneToChange = await droneService.calculateActualCapacity(droneFilteredList._id, 23);
     return droneFilteredList;
 }
