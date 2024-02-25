@@ -28,7 +28,8 @@ export const create = async (droneData) => {
         droneType: droneData.droneType,
         actualCapacity: capacity,
         warehouseId: droneData.warehouseId,
-        batCharge: 100
+        batCharge: 100,
+        status: "ready"
     }
 
     const result = await request.post(baseUrl, body_json);
@@ -43,16 +44,19 @@ const getConsumption = async (droneType) => {
    
 }
 export const edit = async (droneId, droneData) => {
+    // console.log("edit() -> droneData:");
+    // console.log(droneData);
     const body_json = {
         _id: droneId,
         droneType: droneData.droneType,
         actualCapacity: droneData.actualCapacity,
         warehouseId: droneData.warehouseId,
-        batCharge: droneData.batCharge
+        batCharge: droneData.batCharge,
+        status: droneData.status
     };
     const result = await request.put(`${baseUrl}/${droneId}`, body_json);
 
-    console.log(result);
+    
     return result;
 };
 export const remove = async (droneId) => request.remove(`${baseUrl}/${droneId}`);
@@ -78,9 +82,29 @@ export const calculateActualCapacity = async (droneId, path) => {
         droneType: droneData.droneType,
         actualCapacity: newActualCapacity,
         warehouseId: droneData.warehouseId,
-        batCharge: newBatCharge
+        batCharge: newBatCharge,
+        status: droneData.status
+
     };
     const result = await edit(droneId, body_json);
+    console.log(JSON.stringify(result));
+    return result;
+
+}
+export const changeStatus = async (droneId, statusStr) => {
+
+    const droneData = await getOne(droneId);
+    const body_json = {
+        _id: droneId,
+        droneType: droneData.droneType,
+        actualCapacity: droneData.actualCapacity,
+        warehouseId: droneData.warehouseId,
+        batCharge: droneData.batCharge,
+        status: statusStr
+
+    };
+    const result = await edit(droneId, body_json);
+    console.log("changeStatus() -> result:");
     console.log(JSON.stringify(result));
     return result;
 

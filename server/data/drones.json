@@ -4,6 +4,7 @@
         "actualCapacity":500,
         "warehouseId":"1",
         "batCharge":100,
+        "status":"ready",
         "_id":"1"
     },
     "2": {
@@ -11,6 +12,7 @@
         "actualCapacity":500,
         "warehouseId":"2",
         "batCharge":100,
+        "status":"ready",
         "_id":"2"
     },
     "3": {
@@ -18,6 +20,7 @@
         "actualCapacity":1000,
         "warehouseId":"1",
         "batCharge":100,
+        "status":"ready",
         "_id":"3"
         },
     "4": {
@@ -25,6 +28,7 @@
         "actualCapacity":1000,
         "warehouseId":"2",
         "batCharge":100,
+        "status":"ready",
         "_id":"4"
         },
     "5": {
@@ -32,6 +36,7 @@
         "actualCapacity":2000,
         "warehouseId":"1",
         "batCharge":100,
+        "status":"ready",
         "_id":"5"
         },
     "6": {
@@ -39,6 +44,7 @@
         "actualCapacity":2000,
         "warehouseId":"2",
         "batCharge":100,
+        "status":"ready",
         "_id":"6"
         }
 }

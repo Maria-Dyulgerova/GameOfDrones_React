@@ -11,6 +11,7 @@ export const addDetailsToOrders = async () => {
     let warehouise = await warehouseService.setWhStartTime("1", "00:00");
     console.log(warehouise);
     let droneToChange = await droneService.calculateActualCapacity(droneFilteredList._id, 23);
+    droneToChange = await droneService.changeStatus(droneFilteredList._id, "busy");
     return droneFilteredList;
 }
 export const addCoordinatesToOrders = async () => {
@@ -53,7 +54,7 @@ export const findMostSuitableDron = async (wh_id, path ) => {
 //warehouseServices
 
 //calculate batery and actual capacity
-//droneService
+//droneService.calculateActualCapacity
 
 
 //add 5 min to the wh start time
