@@ -43,7 +43,7 @@ export default function EstimateOrderList () {
     return (
         
         <section id="catalog-page">
-            <h1>Order List With For the Time Period Of 120 min</h1>
+            <h1>Order List With For the Time Period Of 120 min after Program Starts</h1>
             <div>
                 <table>
                     <thead>
