@@ -51,14 +51,28 @@ export const edit = async (orderId, orderData) => {
     const body_json = {
         _id: orderId,
         customerId: orderData.customerId,
-        productList: orderData.productList
+        productList: orderData.productList,
+
     };
     const result = await request.put(`${baseUrl}/${orderId}`, body_json);
 
-    console.log(result);
+    // console.log(result);
     return result;
 };
 export const remove = async (orderId) => request.remove(`${baseUrl}/${orderId}`);
+
+export const changeOrderStatus = async (orderId, statusStr) => {
+    const orderData = await getOne(orderId);
+    const body_json = {
+        _id: orderId,
+        customerId: orderData.customerId,
+        productList: orderData.productList,
+        status: statusStr
+    };
+
+
+
+}
 
 // export const editOrderStatusSend = async (orderId, orderData, path) => {
 //     const body_json = {

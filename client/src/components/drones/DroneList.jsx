@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react';
 
 import * as droneService from '../../services/droneService';
-import DroneListItem from '../drones/DroneListItem';
+import DroneListItem from './DroneListItem';
 
 export default function DroneList () {
         const [drones, setDrones] = useState([]);
@@ -17,6 +17,7 @@ export default function DroneList () {
                 console.log(err);
             });
     }, []);
+    console.log("drones");     
     console.log(JSON.stringify(drones));     
     
     return (
@@ -30,8 +31,8 @@ export default function DroneList () {
                             <th>Id </th>
                             <th>Type </th>
                             <th>Warehouse </th>
-                            <th>Actual Capacity </th>
-                            <th>Battery Charged  </th>
+                            <th>Actual Capacity (W) </th>
+                            <th>Battery Charged  (%)</th>
                             <th>Actions</th>
                         </tr>
                     </thead>

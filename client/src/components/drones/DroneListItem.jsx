@@ -25,7 +25,7 @@ export default function DroneListItem({
 
         
     }, []);
-    console.log(JSON.stringify(droneMoreDetails)); 
+    // console.log(JSON.stringify(droneMoreDetails)); 
 
     const deleteButtonClickHandler = async () => {
         const hasConfirmed = confirm(`Are you sure you want to delete ${_id}`);
@@ -43,7 +43,8 @@ export default function DroneListItem({
                 <td>{warehouseId}</td>
                 <td>{actualCapacity}</td>
                 <td>{batCharge}</td>
-                <td><Link to={`/drones/${_id}`} className="details-button">Details</Link>
+                <td>
+                    {/* <Link to={`/drones/${_id}`} className="details-button">Details</Link> */}
                 <button className="button" onClick={deleteButtonClickHandler}>Delete</button>
                 </td>
             </tr>

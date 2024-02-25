@@ -1,7 +1,7 @@
 import OrderList from '../orders/OrderList';
 import WarehouseList from '../warehouses/WarehouseList';
 // import DroneList from '../drones/droneList';
-import Estimate from '../queries/esimate';
+import EstimateOrderList from '../queries/EstimateOrderList';
 function Home () {
     
         
@@ -12,7 +12,7 @@ function Home () {
             <OrderList/>
             <WarehouseList/>
             <DroneList/>
-            <Estimate
+            <EstimateOrderList
                 data={"some data"} 
             />
         </section>    

@@ -17,18 +17,31 @@ export const getOne = async (drone_id) => {
     return result;
 }
 export const create = async (droneData) => {
+    // console.log(droneData.droneType);
+    
+    const droneDetails = await getDroneDetails(droneData.droneType);
+    let capacity = convertInWats(droneDetails.capacity);
+    // console.log(droneDetails.capacity);
+    // console.log(JSON.stringify(droneData));
     const body_json = {
         _id: droneData._id,
         droneType: droneData.droneType,
-        actualCapacity: "",
+        actualCapacity: capacity,
         warehouseId: droneData.warehouseId,
         batCharge: 100
     }
+
     const result = await request.post(baseUrl, body_json);
 
     return result;
 };
 
+
+const getConsumption = async (droneType) => {
+    const droneDetails = await getDroneDetails(droneType);
+    return numbFromString(droneDetails.consumption);
+   
+}
 export const edit = async (droneId, droneData) => {
     const body_json = {
         _id: droneId,
@@ -55,53 +68,80 @@ export const receiveDroneToWarehouse = async (droneId, warehouseId, passedMin) =
     //calculate actual capacity / batCharge 
 }
 
-export const calculateActualCapacity = async (droneType) => {
+// export const calculateActualCapacity = async (droneType) => {
     
-    const droneDetails = await getDroneDetails(droneType);
-    let capacity = getCapacityInWats(droneDetails.capacity);
+//     const droneDetails = await getDroneDetails(droneType);
+//     let capacity = getCapacityInWats(droneDetails.capacity);
 
-    let consumption = numbFromString(droneDetails.consumption);
+//     let consumption = numbFromString(droneDetails.consumption);
 
-    return capacity;
-    // get capacity, power consumption
-    // .replace(/[^0-9]/g, '')
-    //  get batCharge 
+//     return capacity;
+//     // get capacity, power consumption
+//     // .replace(/[^0-9]/g, '')
+//     //  get batCharge 
 
     
-}
+// }
 
 export const getDroneDetails = async(droneType) => {
-    const result = await request.get(droneTypesUrl);
+    // console.log("getDroneDetails");
+    // console.log("droneType from params: ");
     
-    // let resultLength = Object.keys(result).length;
+    // console.log(typeof(droneType));
+    // console.log(droneType);
+    const result = await request.get(droneTypesUrl);
+    // console.log(JSON.stringify(result));
     const droneTypeList = Object.values(result);
-
+    // console.log(JSON.stringify(droneTypeList));
+    let droneData = {}; 
     for (let i = 0; i < droneTypeList.length; i ++) {
+        // console.log("droneTypeList[i]: ");
+        // console.log(typeof(droneTypeList[i]._id));
+        // console.log(droneTypeList[i]._id);
         if (droneTypeList[i]._id == droneType) {
-            return droneTypeList[i];
+            // console.log("here !!!");
+            droneData = droneTypeList[i];
+            break;
         }
     }
-}
+    // console.log("droneData");
+    // console.log(droneData);
+    // let capacity = droneData.capacity;
+    // let capacity = convertInWats(droneData.capacity);
 
-export const setBatteryCharge = async (drone_id, batChargePercentage) => {
-    const droneData = await getOne(drone_id);
-    const body_json = {
-        _id: droneData._id,
-        droneType: droneData.droneType,
-        actualCapacity: droneData.actualCapacity,
-        warehouseId: droneData.warehouseId,
-        batCharge: batChargePercentage
-    };
+    
+    
+    return droneData;
 
 }
-function getCapacityInWats(capacity) {
-    let capacityUnits = capacity.substring(capacity.length - 2);
-    // capacity = numbFromString(capacity);
-    //I asume that if last two symbols are not KW, then the units are W. If we dont unify the mesure units in the input data
-    capacity = (capacityUnits === "kW") ? numbFromString(capacity) : numbFromString(capacity) / 1000;
-    return capacity;
+
+// export const setBatteryCharge = async (drone_id, batChargePercentage) => {
+//     const droneData = await getOne(drone_id);
+//     const body_json = {
+//         _id: droneData._id,
+//         droneType: droneData.droneType,
+//         actualCapacity: droneData.actualCapacity,
+//         warehouseId: droneData.warehouseId,
+//         batCharge: batChargePercentage
+//     };
+
+// }
+function convertInWats(inputCapacity) {
+    let units = symbFromString(inputCapacity);
+    console.log(numbFromString(inputCapacity));
+    console.log(units);
+    
+    // let capacityUnits = inputCapacity.substring(capacity.length - 2);
+    // //I asume that if last two symbols are not KW, then the units are W. If we dont unify the mesure units in the input data
+    let capacity = (units === "kW") ? numbFromString(inputCapacity) * 1000 : numbFromString(inputCapacity);
+    // return capacity;
+    return capacity
 }
 function numbFromString(str) { 
     var num = str.replace(/[^0-9]/g, ''); 
     return parseInt(num,10); 
+}
+function symbFromString(str) { 
+    var symbols = str.replace(/[^a-zA-Z]/g, ''); 
+    return symbols; 
 }

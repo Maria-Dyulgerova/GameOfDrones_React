@@ -1,12 +1,28 @@
 import { useEffect, useState } from 'react';
 
 import * as orderService from '../../services/orderService';
-import OrderListItem from './OrderListItem';
+import EstimateOrderListItem from './EstimateOrderListItem';
 
-export default function OrderList () {
+export default function EstimateOrderList () {
     
+    const [orders, setOrders] = useState([]);
+
+    useEffect(() => {
+        orderService.getAll()
+            .then(
+                result => {
+                    setOrders(result);
+                    
+                })
+            .catch(err => {
+                console.log(err);
+            });
+    }, []);
+    // console.log(orders);
+    
+
         // console.log(this.props.orders);
-        const [orders, setOrders] = useState([]);
+        
         
     useEffect(() => {
         orderService.getAll()
@@ -29,21 +45,24 @@ export default function OrderList () {
                 <table>
                     <thead>
                         <tr>
-                            <th>Customer ID</th>
-                            <th>Product List</th>
-                            {/* <th>Coordinates</th> */}
-                            <th>Actions</th>
+                            <th>Id</th>
+                            <th>Customer</th>
+                            {/* <th>Product List</th> */}
+                            <th>Coordinates</th>
+                            <th>Status</th>
+                            
                         </tr>
                     </thead>
                     <tbody>
             {orders.map(order => (
                 
-                <OrderListItem 
+                <EstimateOrderListItem 
                 
                     key={order._id}  
                     _id={order._id} 
-                    customerId={order.customerId}  
-                    productList={JSON.stringify(order.productList)} 
+                    customerId={order.customerId} 
+                    status={order.status} 
+                    // productList={JSON.stringify(order.productList)} 
                     
                     />
                 

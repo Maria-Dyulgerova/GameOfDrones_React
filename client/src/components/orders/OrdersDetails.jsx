@@ -25,8 +25,6 @@ export default function OrderDetails() {
             .then(setOrderCustomersDetails);
             
     }, [orderId]);
-
-    // console.log(JSON.stringify(orderCustomerDetails.name));
     
     const deleteButtonClickHandler = async () => {
         const hasConfirmed = confirm(`Are you sure you want to delete ${orderDetails._id}`);
@@ -38,31 +36,27 @@ export default function OrderDetails() {
         }
     }
 
-// orderService.getDetails(orderId);
     return (
         <section id="create-page" className="auth">
             <div className="container">
-                    <h1>Order Details</h1>
-                    <div className="element-wrapper">
-                <div>
+                <h1>Order Details</h1>
+                <div className="element-wrapper">
                     <div>
+                        <div>
                         
-                    
-                        <p className="type">Customer Name: <strong>{JSON.stringify(orderCustomerDetails.name)}</strong></p>
-                        <p className="type">Product List: <strong>{JSON.stringify(orderDetails.productList)}</strong></p>
-                        <p className="type">Coordinates: <strong>{JSON.stringify(orderCustomerDetails.coordinates)}</strong></p>
+                            <p className="type">Customer Name: <strong>{JSON.stringify(orderCustomerDetails.name)}</strong></p>
+                            <p className="type">Product List: <strong>{JSON.stringify(orderDetails.productList)}</strong></p>
+                            <p className="type">Coordinates: <strong>{JSON.stringify(orderCustomerDetails.coordinates)}</strong></p>
                         
                         <br/>
-                        
+                        </div>
                     </div>
-                </div>
                
 
-                <Link to={pathToUrl(Path.OrderEdit, { orderId })} className="button">Edit</Link>
+                    <Link to={pathToUrl(Path.OrderEdit, { orderId })} className="button">Edit</Link>
                         
-                <button className="button" onClick={deleteButtonClickHandler}>Delete</button>
-                {/* <Link to={`/artists/${_id}`} className="edit-button">Edit</Link> */}
-            </div>
+                    <button className="button" onClick={deleteButtonClickHandler}>Delete</button>
+                </div>
             </div>
         </section>
     );

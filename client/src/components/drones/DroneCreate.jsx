@@ -15,7 +15,7 @@ export default function DroneCreate() {
         e.preventDefault();
 
         const droneData = Object.fromEntries(new FormData(e.currentTarget));
-        console.log(droneData);
+        // console.log(droneData);
         try {
             await droneService.create(droneData);
 

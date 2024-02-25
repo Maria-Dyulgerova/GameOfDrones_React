@@ -14,7 +14,7 @@ import DroneCreate from './components/drones/DroneCreate';
 
 import WarehouseList from './components/warehouses/WarehouseList';
 import WarehouseDetails from './components/warehouses/WarehouseDetails';
-import Estimate from './components/queries/esimate';
+import EstimateOrderList from './components/queries/EstimateOrderList';
 import CustomerList from './components/customers/CustomerList';
 
 function App() {
@@ -38,7 +38,7 @@ function App() {
 
           <Route path={Path.CustomerList} element={<CustomerList/>}/>
           
-          <Route path={Path.Estimate} element={<Estimate/>}/>
+          <Route path={Path.EstimateOrderList} element={<EstimateOrderList/>}/>
         </Routes>
         
       </div>
