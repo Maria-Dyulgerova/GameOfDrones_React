@@ -43,7 +43,7 @@ export default function EstimateOrderList () {
     return (
         
         <section id="catalog-page">
-            <h1>Order List With For the Time Period Of 120 min after Program Starts</h1>
+            <h1>Order List For the Time Period Of 120 min after Program Starts</h1>
             <div>
                 <table>
                     <thead>
@@ -53,6 +53,9 @@ export default function EstimateOrderList () {
                             {/* <th>Product List</th> */}
                             <th>Coordinates</th>
                             <th>Status</th>
+                            <th>Start Time</th>
+                            <th>Path</th>
+                            <th>Drone</th>
                             
                         </tr>
                     </thead>
@@ -65,6 +68,9 @@ export default function EstimateOrderList () {
                     _id={order._id} 
                     customerId={order.customerId} 
                     status={order.status} 
+                    startTime={order.startTime}
+                    path={order.path}  
+                    drone={order.drone} 
                     // productList={JSON.stringify(order.productList)} 
                     
                     />

@@ -8,7 +8,10 @@ export default function EstimateOrderListItem({
     _id,
     customerId, 
     productList, 
-    status
+    status,
+    path,
+    startTime,
+    drone
 }) {
     const [orderMoreDetails, setOrderMoreDetails] = useState({});
     
@@ -30,6 +33,9 @@ export default function EstimateOrderListItem({
             <td>{orderMoreDetails.name}</td>
             <td>{orderMoreDetails.coordinates?.x} : {orderMoreDetails.coordinates?.y}</td>
             <td>{statusStr}</td>
+            <td>{startTime}</td>
+            <td>{path}</td>
+            <td>{drone}</td>
             
         </tr>
     );
