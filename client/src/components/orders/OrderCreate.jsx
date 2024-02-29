@@ -10,13 +10,7 @@ import * as orderService from "../../services/orderService";
 export default function OrderCreate() {
     const navigate = useNavigate();
 
-    // const [formValues, setFormValues] = useState({});
     const [errors, setErrors] = useState({});
-    // const artistNameInputRef = useRef();
-    
-    // useEffect(() => {
-    //     artistNameInputRef.current.focus();
-    // }, []);
     
     const createOrderSubmitHandler = async (e) => {
         e.preventDefault();

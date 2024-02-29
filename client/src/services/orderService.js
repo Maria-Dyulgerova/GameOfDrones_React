@@ -211,12 +211,17 @@ export const setOrderStartTime = async (orderId, startTime) => {
 }
 export const getDeliveredOrders = async (timeInMin) => {
     let orderList = await getAll();
+    
     let deliveredOrdersList = [];
     let dronesToReceiveList = [];
     for (let i = 0; i < orderList.length; i ++) {
         if ((orderList[i].startTime != undefined) && (orderList[i].startTime != "")) {
-            console.log(orderList[i].startTime);
+            console.log(orderList[i].startTime + orderList[i].path * 2 < timeInMin);
+            // console.log("orderList[i].startTime" + orderList[i].startTime );
+            // console.log("orderList[i].path" + orderList[i].path );
+            // console.log("timeInMin" + timeInMin );
             if (orderList[i].startTime + orderList[i].path * 2 < timeInMin) {
+                
                 deliveredOrdersList.push(orderList[i]);
                 dronesToReceiveList.push(orderList[i].drone);
             }
@@ -224,6 +229,7 @@ export const getDeliveredOrders = async (timeInMin) => {
         }
         
     }
+    
     let data = [];
     if (dronesToReceiveList.length > 0) {
         
@@ -232,7 +238,7 @@ export const getDeliveredOrders = async (timeInMin) => {
         
     }
     console.log("getDeliveredOrders(...) -> data:");
-    console.log(JSON.stringify(data));
+    // console.log(JSON.stringify(data));
     return data;
     
 }

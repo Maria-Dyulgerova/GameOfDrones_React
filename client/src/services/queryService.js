@@ -10,17 +10,17 @@ import * as customerService from "./customersService";
 //set start time from what comes from input
 export const estimateGeneralStartTime = "00:00";
 //this comes also from input
-export const timeIntervalInMins = 120;
+// export const timeIntervalInMins = 120;
 
 
-export const startProgramFlow = async () => {
+export const startProgramFlow = async (timePeriodInMinutes) => {
     let orderList = await orderService.getAll();
     let orderDetails = {};
     let nearestWarehouseData = [];
     let drone = {};
     let packingTime = 5;
-    for (let i = 0; i < orderList.length; i ++) {
-        orderDetails = await orderService.getDetails(orderList[i]._id);
+    for (let orderCount = 0; orderCount < orderList.length; orderCount ++) {
+        orderDetails = await orderService.getDetails(orderList[orderCount]._id);
         
         nearestWarehouseData = await orderService.findNearestWarehouse(orderDetails.coordinates.x, orderDetails.coordinates.y);
         //path = nearestWarehouseData[0]; warehouseId = nearestWarehouseData[1]
@@ -31,22 +31,38 @@ export const startProgramFlow = async () => {
             let warehouse = await warehouseService.setWarehouseTime(nearestWarehouseData[1], packingTime);
             let droneToChange = await droneService.calculateActualCapacity(drone._id, nearestWarehouseData[0]);
             droneToChange = await droneService.changeStatus(drone._id, "busy");
-            let orderToChange = await orderService.changeOrderStatus(orderList[i]._id, 'currently in delivery');
-            orderToChange = await orderService.setOrderPath(orderList[i]._id, nearestWarehouseData[0]);
-            orderToChange = await orderService.setOrderDrone(orderList[i]._id, drone._id);  
-            orderToChange = await orderService.setOrderStartTime(orderList[i]._id, warehouse.time + packingTime);
+            let orderToChange = await orderService.changeOrderStatus(orderList[orderCount]._id, 'currently in delivery');
+            orderToChange = await orderService.setOrderPath(orderList[orderCount]._id, nearestWarehouseData[0]);
+            orderToChange = await orderService.setOrderDrone(orderList[orderCount]._id, drone._id);  
+            orderToChange = await orderService.setOrderStartTime(orderList[orderCount]._id, warehouse.time + packingTime);
         } else {
             console.log('startProgramFlow: NO Drones available');
             //find delivered orders by endTime
-            let deliveredOrdersData = await orderService.getDeliveredOrders(timeIntervalInMins);
-            let deliveredOrdersList = deliveredOrdersData[0];
-            let dronesToReceiveList = deliveredOrdersData[1];
+            console.log(timePeriodInMinutes.timePeriod);
     
-            //check if they have enough capacity to make the delivery
-            let dronesWithCapacity = [];
-            console.log(nearestWarehouseData[0]);
-            let availableDronesList = await droneService.checkAvailability(deliveredOrdersData[1], nearestWarehouseData[0]);
+            let deliveredOrdersData = await orderService.getDeliveredOrders(timePeriodInMinutes.timePeriod);
+            if (deliveredOrdersData.length > 0) {
+                let deliveredOrdersList = deliveredOrdersData[0];
+                let dronesToReceiveList = deliveredOrdersData[1];
+        
+                //check if they have enough capacity to make the delivery
+                let dronesWithCapacity = [];
+                console.log(nearestWarehouseData[0]);
+                let availableDronesList = await droneService.checkAvailability(deliveredOrdersData[1], nearestWarehouseData[0]);
+                
+                if (availableDronesList.length > 0) {
+                    for (let i = 0; i < availableDronesList.length; i ++) {
+                        let droneToChange = await droneService.calculateActualCapacity(availableDronesList[i]._id, nearestWarehouseData[0]);
+                        droneToChange = await droneService.changeStatus(availableDronesList[i]._id, "ready");
             
+                    }
+
+                } else {
+                    //charge drones if there are in Warehouse with no enough capacity and add 20 min to the warehouse time
+                }
+            } else {
+                console.log("No Orders could be delivered in such a short time period");
+            }
             //charge drones and return the first ready with 100% batCharge
             //charge all other drones with same percentage like the first ready
             //add returned time for the first ready drone min to wearhouseTime

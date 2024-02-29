@@ -1,6 +1,6 @@
 // import { useState } from 'react';
 import { Routes, Route } from 'react-router-dom';
-
+import CalculateEstimate from './components/queries/CalculateEstimate';
 import Path from './paths';
 import Header from "./components/header/Header";
 import Home from './components/home/Home';
@@ -14,8 +14,10 @@ import DroneCreate from './components/drones/DroneCreate';
 
 import WarehouseList from './components/warehouses/WarehouseList';
 import WarehouseDetails from './components/warehouses/WarehouseDetails';
+
 import EstimateOrderList from './components/queries/EstimateOrderList';
 import CustomerList from './components/customers/CustomerList';
+
 
 function App() {
   
@@ -38,6 +40,7 @@ function App() {
 
           <Route path={Path.CustomerList} element={<CustomerList/>}/>
           
+          <Route path={Path.CalculateEstimate} element={<CalculateEstimate/>}/>
           <Route path={Path.EstimateOrderList} element={<EstimateOrderList/>}/>
         </Routes>
         

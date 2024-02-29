@@ -166,6 +166,7 @@ export const chargeBateries = async (droneList) => {
     //return droneId, time
 }
 export const checkAvailability = async (droneList, path) => {
+console.log(droneList);
 
     let droneListFull = await getAll();
     let availableDronesList = [];
@@ -180,9 +181,13 @@ export const checkAvailability = async (droneList, path) => {
     }
     console.log("checkAvailability() -> result:");
     
-    console.log(JSON.stringify(droneList));
+    console.log(JSON.stringify(availableDronesList));
     //return droneId, time
     return availableDronesList;
+}
+
+export const receiveDrone = async (droneId) => {
+
 }
 
 function convertInWats(inputCapacity) {

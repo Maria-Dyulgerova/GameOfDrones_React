@@ -32,7 +32,11 @@ export default function OrderList () {
                             <th>Customer ID</th>
                             <th>Product List</th>
                             {/* <th>Coordinates</th> */}
-                            <th>Actions</th>
+                            <th>status</th>
+                            <th>startTime</th>
+                            <th>path List</th>
+                            <th>drone</th>
+                            <th>Acrions</th>
                         </tr>
                     </thead>
                     <tbody>
@@ -44,7 +48,10 @@ export default function OrderList () {
                     _id={order._id} 
                     customerId={order.customerId}  
                     productList={JSON.stringify(order.productList)} 
-                    
+                    status={order.status} 
+                    startTime={order.startTime}
+                    path={order.path}  
+                    drone={order.drone} 
                     />
                 
             ))}

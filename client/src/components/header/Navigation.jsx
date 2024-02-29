@@ -14,7 +14,7 @@ export default function Navigation() {
                 <Link as={Link} to={Path.CustomerList}>Customers</Link> | 
                 <Link as={Link} to={Path.DroneList}>Drones</Link> | 
                 <Link as={Link} to={Path.DroneCreate}>Add Drone</Link> | 
-                <Link as={Link} to={Path.EstimateOrderList}>Make Estimate</Link>    
+                <Link as={Link} to={Path.CalculateEstimate}>Make Estimate</Link>    
                 
             </div>
         </nav>

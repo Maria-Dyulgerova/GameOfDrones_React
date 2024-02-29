@@ -19,7 +19,8 @@ const Path = {
     CustomerList: 'customers/list',
     CustomerDetails: 'customers/:customerId',
 
-    EstimateOrderList: 'queries/EstimateOrderList'
+    CalculateEstimate: 'queries/CalculateEstimate',
+    CalculateEstimate: 'queries/EstimateOrderList'
 
 };
 

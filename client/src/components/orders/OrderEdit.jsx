@@ -47,7 +47,7 @@ export default function OrderEdit() {
     
 
     return (
-        <section id="create-page" className="auth">
+        <section id="create-page">
             <form id="create" onSubmit={editOrderSubmitHandler}>
                 <div className="container">
                     <h1>Edit Order</h1>

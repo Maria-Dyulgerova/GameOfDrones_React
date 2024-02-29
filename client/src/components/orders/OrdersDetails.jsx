@@ -37,7 +37,7 @@ export default function OrderDetails() {
     }
 
     return (
-        <section id="create-page" className="auth">
+        <section id="create-page">
             <div className="container">
                 <h1>Order Details</h1>
                 <div className="element-wrapper">
