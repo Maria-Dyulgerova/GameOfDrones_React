@@ -15,11 +15,11 @@ export default function EstimateOrderListItem({
 }) {
     const [orderMoreDetails, setOrderMoreDetails] = useState({});
     
-    let statusStr = (status === undefined) ? "to be delivered" : status;
+    let statusStr = ((status === undefined) || (status == "")) ? "to be delivered" : status;
 
 
     useEffect(() => {
-        orderService.getDetails(customerId)
+        orderService.getCoordinates(customerId)
             .then(setOrderMoreDetails);
 
         

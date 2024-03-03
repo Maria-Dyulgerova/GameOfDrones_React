@@ -24,8 +24,7 @@ export default function OrderEdit() {
         e.preventDefault();
 
         const orderData = Object.fromEntries(new FormData(e.currentTarget));
-        // console.log(artistData);
-
+        
         try {
             await orderService.edit(orderId, orderData);
 
@@ -47,8 +46,8 @@ export default function OrderEdit() {
     
 
     return (
-        <section id="create-page">
-            <form id="create" onSubmit={editOrderSubmitHandler}>
+        <section id="edit-page">
+            <form id="edit" onSubmit={editOrderSubmitHandler}>
                 <div className="container">
                     <h1>Edit Order</h1>
                     <input type="hidden" id="_id" name="_id" value={order._id}/>

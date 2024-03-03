@@ -9,11 +9,14 @@ import OrderList from './components/orders/OrderList';
 import OrderDetails from './components/orders/OrdersDetails';
 import OrderCreate from './components/orders/OrderCreate';
 import OrderEdit from './components/orders/OrderEdit';
+import DroneEdit from './components/drones/DroneEdit';
+
 import DroneList from './components/drones/DroneList';
 import DroneCreate from './components/drones/DroneCreate';
 
 import WarehouseList from './components/warehouses/WarehouseList';
 import WarehouseDetails from './components/warehouses/WarehouseDetails';
+import WarehouseEdit from './components/warehouses/WarehouseEdit';
 
 import EstimateOrderList from './components/queries/EstimateOrderList';
 import CustomerList from './components/customers/CustomerList';
@@ -34,11 +37,13 @@ function App() {
 
           <Route path={Path.DroneList} element={<DroneList />}/>
           <Route path={Path.DroneCreate} element={<DroneCreate />}/>
+          <Route path={Path.DroneEdit} element={<DroneEdit />}/>
                             
           <Route path={Path.WarehouseList} element={<WarehouseList />} />
           <Route path={Path.WarehouseDetails} element={<WarehouseDetails/>}/>
+          <Route path={Path.WarehouseEdit} element={<WarehouseEdit/>}/>
 
-          <Route path={Path.CustomerList} element={<CustomerList/>}/>
+          <Route path={Path.CustomerList} element={<CustomerList />}/>
           
           <Route path={Path.CalculateEstimate} element={<CalculateEstimate/>}/>
           <Route path={Path.EstimateOrderList} element={<EstimateOrderList/>}/>

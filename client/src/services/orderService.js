@@ -21,7 +21,7 @@ export const getOne = async (order_id) => {
 
     return result;
 }
-export const getDetails = async (order_id) => {
+export const getCoordinates = async (order_id) => {
     const orderData = await request.get(`${baseUrl}/${order_id}`, );
     
     const customerData = await request.get(`${baseCustomersUrl}/${orderData.customerId}`,);
@@ -76,7 +76,7 @@ export const buildOrderCoordinatesList = async () => {
     let orderObj = {};
     let detailedOrderObj = {};
     for (let i = 0; i < orderList.length; i ++) {
-        orderObj = await getDetails(orderList[i]._id);
+        orderObj = await getCoordinates(orderList[i]._id);
         detailedOrderObj = {
             _id: orderList[i]._id,
             customerId: orderList[i].customerId,
@@ -97,7 +97,7 @@ export const buildOrderDetailedList = async () => {
     let detailedOrderObj = {};
     let nearestWh = "";
     for (let i = 0; i < orderList.length; i ++) {
-        orderObj = await getDetails(orderList[i]._id);
+        orderObj = await getCoordinates(orderList[i]._id);
         nearestWh = await findNearestWarehouse(orderObj.coordinates.x, orderObj.coordinates.y);
         detailedOrderObj = {
             _id: orderList[i]._id,

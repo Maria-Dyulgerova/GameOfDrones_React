@@ -15,14 +15,22 @@ export const estimateGeneralStartTime = "00:00";
 
 export const startProgramFlow = async (timePeriodInMinutes) => {
     let orderList = await orderService.getAll();
-    let orderDetails = {};
+    let orderData = {};
+    let orderCoordinates = {};
+    
     let nearestWarehouseData = [];
     let drone = {};
     let packingTime = 5;
     for (let orderCount = 0; orderCount < orderList.length; orderCount ++) {
-        orderDetails = await orderService.getDetails(orderList[orderCount]._id);
-        
-        nearestWarehouseData = await orderService.findNearestWarehouse(orderDetails.coordinates.x, orderDetails.coordinates.y);
+        orderData = await orderService.getOne(orderList[orderCount]._id);
+        orderCoordinates = await orderService.getCoordinates(orderList[orderCount]._id);
+        console.log(orderData);
+        if ((orderData.startTime !== undefined) && (orderData.startTime != "")){
+            console.log(orderData.startTime);
+            continue;
+
+        }
+        nearestWarehouseData = await orderService.findNearestWarehouse(orderCoordinates.coordinates.x, orderCoordinates.coordinates.y);
         //path = nearestWarehouseData[0]; warehouseId = nearestWarehouseData[1]
         drone = await findMostSuitableDron(nearestWarehouseData[1], nearestWarehouseData[0]);
         console.log(JSON.stringify(drone));
@@ -54,7 +62,6 @@ export const startProgramFlow = async (timePeriodInMinutes) => {
                     for (let i = 0; i < availableDronesList.length; i ++) {
                         let droneToChange = await droneService.calculateActualCapacity(availableDronesList[i]._id, nearestWarehouseData[0]);
                         droneToChange = await droneService.changeStatus(availableDronesList[i]._id, "ready");
-            
                     }
 
                 } else {
@@ -70,11 +77,10 @@ export const startProgramFlow = async (timePeriodInMinutes) => {
         }
         
 
-        // break;
 
     }
-    let ordersWithStatusList = await orderService.getAll();
-    return ordersWithStatusList;
+    // let ordersWithStatusList = await orderService.getAll();
+    // return ordersWithStatusList;
 }
     
 
@@ -86,9 +92,10 @@ export const findMostSuitableDron = async (wh_id, path ) => {
     console.log(JSON.stringify(droneList));
     let capacityDroneList = [];
     let idsDroneList = [];
+    let consumption = "";
     for(let i in droneList) { 
-        console.log(droneList[i].actualCapacity);
-        if ((droneList[i].actualCapacity > path) && (droneList[i].status == "ready")){
+        consumption = await droneService.getConsumption(droneList[i].droneType);
+        if ((droneList[i].actualCapacity > path * 2 * consumption) && (droneList[i].status == "ready")){
             capacityDroneList.push(droneList[i].actualCapacity); 
             idsDroneList.push(droneList[i]._id);
         } 
@@ -101,8 +108,8 @@ export const findMostSuitableDron = async (wh_id, path ) => {
         
         let droneIndex = capacityDroneList.indexOf(closestCapacity);
         
-        console.log("idsDroneList[droneIndex]");
-        console.log(JSON.stringify(idsDroneList[droneIndex]));
+        // console.log("idsDroneList[droneIndex]");
+        // console.log(JSON.stringify(idsDroneList[droneIndex]));
         return {
             _id: idsDroneList[droneIndex]
         };

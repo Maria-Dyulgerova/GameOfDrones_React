@@ -19,8 +19,6 @@ export default function OrderList () {
                 console.log(err);
             });
     }, []);
-    console.log(orders);
-
     return (
         
         <section id="catalog-page">
@@ -32,11 +30,11 @@ export default function OrderList () {
                             <th>Customer ID</th>
                             <th>Product List</th>
                             {/* <th>Coordinates</th> */}
-                            <th>status</th>
-                            <th>startTime</th>
-                            <th>path List</th>
-                            <th>drone</th>
-                            <th>Acrions</th>
+                            <th>Status</th>
+                            <th>Start Time</th>
+                            <th>Path</th>
+                            <th>Drone</th>
+                            <th>Actions</th>
                         </tr>
                     </thead>
                     <tbody>

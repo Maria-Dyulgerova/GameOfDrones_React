@@ -27,7 +27,8 @@ export default function OrderCreate() {
         }
     }
     return (
-        <section id="create-page" className="auth">
+        <>
+        <section id="create-page">
             <form id="create" onSubmit={createOrderSubmitHandler}>
                 <div className="container">
                     <h1>Add New Order</h1>
@@ -45,6 +46,7 @@ export default function OrderCreate() {
                 </div> 
             </form>
         </section>
+        </>
     );
 
 }

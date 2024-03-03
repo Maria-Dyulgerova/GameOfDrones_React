@@ -1,11 +1,16 @@
 import { useEffect, useState } from 'react';
+import { useParams } from 'react-router-dom';
+
 
 import * as droneService from '../../services/droneService';
 import DroneListItem from './DroneListItem';
 
-export default function DroneList () {
-        const [drones, setDrones] = useState([]);
+export default function DroneList (warehouseId) {
+    const [drones, setDrones] = useState([]);
 
+    // const { warehouseId } = useParams();
+    console.log(warehouseId);
+    
     useEffect(() => {
         droneService.getAll()
             .then(

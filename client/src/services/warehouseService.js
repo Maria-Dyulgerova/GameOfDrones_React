@@ -1,4 +1,5 @@
 import * as request from "../lib/request";
+import * as droneService from "../services/droneService"
 
 
 // const baseUrl = 'http://localhost:3030/jsonstore/input_data/warehouses';
@@ -14,9 +15,20 @@ export const getAll = async () => {
 };
 export const getOne = async (warehouse_id) => {
 
-    const result = await request.get(`${baseUrl}/${warehouse_id}`, );
+    const warehouseData = await request.get(`${baseUrl}/${warehouse_id}`, );
 
-    return result;
+    const drones = await droneService.getDronesFromWarehouse(warehouse_id);
+
+    warehouseData.drones = JSON.stringify(drones);
+
+    return warehouseData;
+}
+export const body_json = {
+    _id: "",
+    name: "",
+    x: "",
+    y: "",
+    time: ""
 }
 export const edit = async (warehouse_id, warehouseData) => {
     const body_json = {
@@ -32,13 +44,14 @@ export const edit = async (warehouse_id, warehouseData) => {
 };
 export const setWarehouseTime = async (wh_id, minPlus) => {
     const warehouse = await getOne(wh_id);
+    let whTime = (warehouse.time != undefined) ? warehouse.time + minPlus : minPlus;
     
     const body_json = {
         _id: wh_id,
         name: warehouse.name,
         x: warehouse.x,
         y: warehouse.y,
-        time: warehouseTime + minPlus
+        time: whTime
     };
 
     const refacturedWh = await edit(wh_id, body_json);

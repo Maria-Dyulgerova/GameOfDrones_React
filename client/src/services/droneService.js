@@ -38,7 +38,7 @@ export const create = async (droneData) => {
 };
 
 
-const getConsumption = async (droneType) => {
+export const getConsumption = async (droneType) => {
     const droneDetails = await getDroneDetails(droneType);
     return numbFromString(droneDetails.consumption);
    
@@ -72,10 +72,12 @@ export const body_json = {
 
 export const calculateActualCapacity = async (droneId, path) => {
     console.log("calculateActualCapacity(...) -> enter:");
-console.log("droneId" + droneId);
-console.log("path" + path);
+console.log("droneId: " + droneId);
+console.log("path: " + path);
     const droneData = await getOne(droneId);
     let consumption = await getConsumption(droneData.droneType);
+    console.log("consumption: " + consumption);
+    console.log("droneData.actualCapacity: " + droneData.actualCapacity);
     let newActualCapacity =  droneData.actualCapacity - path * 2 * consumption;
     let percentage = (newActualCapacity / droneData.actualCapacity ) * 100;
     let newBatCharge = (droneData.batCharge * percentage) / 100;
@@ -84,7 +86,7 @@ console.log("path" + path);
         droneType: droneData.droneType,
         actualCapacity: newActualCapacity,
         warehouseId: droneData.warehouseId,
-        batCharge: newBatCharge,
+        batCharge: Math.floor(newBatCharge),
         status: droneData.status
 
     };
@@ -146,20 +148,29 @@ export const getDroneDetails = async(droneType) => {
     return droneData;
 
 }
-export const getDronesFromWarehouse = async (wh_id) => {
+export const getDronesFromWarehouse = async (warehouseId) => {
      
 
-    let droneList = await request.get(baseUrl);
+//     let droneList = await request.get(baseUrl);
     
-    let filteredDroneList = [];
-    for(let i in droneList) { 
-        // console.log(droneList[i]);
-        if (droneList[i].warehouseId == wh_id) {
-            filteredDroneList.push(droneList[i]); 
-        }
-     }; 
-   console.log(filteredDroneList);
-    return filteredDroneList;
+//     let filteredDroneList = [];
+//     for(let i in droneList) { 
+//         // console.log(droneList[i]);
+//         if (droneList[i].warehouseId == wh_id) {
+//             filteredDroneList.push(droneList[i]); 
+//         }
+//      }; 
+//    console.log(filteredDroneList);
+//     return filteredDroneList;
+const query = new URLSearchParams({
+    where: `warehouseId="${warehouseId}"`
+});
+
+const result = await request.get(`${baseUrl}`);
+
+// TODO: temp solution until migration to collections service 
+return Object.values(result).filter(drone => drone.warehouseId == warehouseId);
+
 }
 export const chargeBateries = async (droneList) => {
     console.log(JSON.stringify(droneList))

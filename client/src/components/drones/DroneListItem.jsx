@@ -1,10 +1,12 @@
 import { useEffect, useState } from "react";
 
-import { Link, useNavigate } from "react-router-dom";
+import { Link, useNavigate, useParams } from "react-router-dom";
 
 import * as droneService from "../../services/droneService";
 
 import Path from '../../paths';
+import { pathToUrl } from "../../utils/pathUtils";
+
 
 export default function DroneListItem({
     _id,
@@ -45,6 +47,8 @@ export default function DroneListItem({
                 <td>{batCharge}</td>
                 <td>
                     {/* <Link to={`/drones/${_id}`} className="details-button">Details</Link> */}
+                <Link to={pathToUrl(Path.DroneEdit, { _id })} className="button">Edit</Link>
+                    
                 <button className="button" onClick={deleteButtonClickHandler}>Delete</button>
                 </td>
             </tr>
