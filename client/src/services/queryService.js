@@ -10,10 +10,11 @@ import * as customerService from "./customersService";
 //set start time from what comes from input
 export const estimateGeneralStartTime = "00:00";
 //this comes also from input
-// export const timeIntervalInMins = 120;
+export let timeIntervalInMins = 0;
 
 
-export const startProgramFlow = async (timePeriodInMinutes) => {
+export const startProgramFlow = async (timePeriod) => {
+    timeIntervalInMins = timePeriod;
     let orderList = await orderService.getAll();
     let orderData = {};
     let orderCoordinates = {};
@@ -32,6 +33,9 @@ export const startProgramFlow = async (timePeriodInMinutes) => {
         }
         nearestWarehouseData = await orderService.findNearestWarehouse(orderCoordinates.coordinates.x, orderCoordinates.coordinates.y);
         //path = nearestWarehouseData[0]; warehouseId = nearestWarehouseData[1]
+        if (nearestWarehouseData[0] < timePeriod) {
+            continue;
+        }
         drone = await findMostSuitableDron(nearestWarehouseData[1], nearestWarehouseData[0]);
         console.log(JSON.stringify(drone));
         if ((Object.keys(drone).length > 0) && (drone._id > -1)) {
@@ -46,9 +50,9 @@ export const startProgramFlow = async (timePeriodInMinutes) => {
         } else {
             console.log('startProgramFlow: NO Drones available');
             //find delivered orders by endTime
-            console.log(timePeriodInMinutes.timePeriod);
+            console.log(timePeriod);
     
-            let deliveredOrdersData = await orderService.getDeliveredOrders(timePeriodInMinutes.timePeriod);
+            let deliveredOrdersData = await orderService.getDeliveredOrders(timePeriod);
             if (deliveredOrdersData.length > 0) {
                 let deliveredOrdersList = deliveredOrdersData[0];
                 let dronesToReceiveList = deliveredOrdersData[1];
@@ -69,6 +73,7 @@ export const startProgramFlow = async (timePeriodInMinutes) => {
                 }
             } else {
                 console.log("No Orders could be delivered in such a short time period");
+                break;
             }
             //charge drones and return the first ready with 100% batCharge
             //charge all other drones with same percentage like the first ready

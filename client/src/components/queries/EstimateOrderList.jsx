@@ -7,7 +7,6 @@ import EstimateOrderListItem from './EstimateOrderListItem';
 export default function EstimateOrderList () {
     
     const [orders, setOrders] = useState([]);
-    
     useEffect(() => {
         orderService.getAll()
             .then(
@@ -19,31 +18,16 @@ export default function EstimateOrderList () {
                 console.log(err);
             });
     }, []);
-
-    console.log("orders from query service:");
-    console.log(orders);
+    const timePeriod = queryService.timeIntervalInMins;
     
-
-        // console.log(this.props.orders);
-        
-        
-    // useEffect(() => {
-    //     orderService.getAll()
-    //         .then(
-    //             result => {
-    //                 setOrders(result);
-                    
-    //             })
-    //         .catch(err => {
-    //             console.log(err);
-    //         });
-    // }, []);
-    // console.log(orders);
+    // console.log("orders from query service:");
+    // console.log(timePeriod);
+    
 
     return (
         
         <section id="catalog-page">
-            <h1>Order List For the Time Period Of 120 min after Program Starts</h1>
+            <h1>Order List For the Time Period Of {`${timePeriod}`} min after Program Starts</h1>
             <div>
                 <table>
                     <thead>

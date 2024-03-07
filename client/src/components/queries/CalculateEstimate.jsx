@@ -15,10 +15,10 @@ export default function CalculateEstimate() {
     const createEstimateSubmitHandler = async (e) => {
         e.preventDefault();
 
-        const timeInMinutes = Object.fromEntries(new FormData(e.currentTarget));
+        const formData = Object.fromEntries(new FormData(e.currentTarget));
 
         try {
-            await queryService.startProgramFlow(timeInMinutes);
+            await queryService.startProgramFlow(formData.timePeriod);
 
             navigate(Path.EstimateOrderList);
         } catch (err) {
