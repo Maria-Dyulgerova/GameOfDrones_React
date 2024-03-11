@@ -2,6 +2,7 @@ import * as droneService from "./droneService";
 import * as orderService from "./orderService";
 import * as warehouseService from "./warehouseService";
 import * as customerService from "./customersService";
+import * as Enums from "../enums";
 
 
 
@@ -42,8 +43,8 @@ export const startProgramFlow = async (timePeriod) => {
             
             let warehouse = await warehouseService.setWarehouseTime(nearestWarehouseData[1], packingTime);
             let droneToChange = await droneService.calculateActualCapacity(drone._id, nearestWarehouseData[0]);
-            droneToChange = await droneService.changeStatus(drone._id, "busy");
-            let orderToChange = await orderService.changeOrderStatus(orderList[orderCount]._id, 'currently in delivery');
+            droneToChange = await droneService.changeStatus(drone._id, Enums.DroneStatus.busy);
+            let orderToChange = await orderService.changeOrderStatus(orderList[orderCount]._id, Enums.OrderStatus.currentlyInDelivery);
             orderToChange = await orderService.setOrderPath(orderList[orderCount]._id, nearestWarehouseData[0]);
             orderToChange = await orderService.setOrderDrone(orderList[orderCount]._id, drone._id);  
             orderToChange = await orderService.setOrderStartTime(orderList[orderCount]._id, warehouse.time + packingTime);
@@ -65,14 +66,14 @@ export const startProgramFlow = async (timePeriod) => {
                 if (availableDronesList.length > 0) {
                     for (let i = 0; i < availableDronesList.length; i ++) {
                         let droneToChange = await droneService.calculateActualCapacity(availableDronesList[i]._id, nearestWarehouseData[0]);
-                        droneToChange = await droneService.changeStatus(availableDronesList[i]._id, "ready");
+                        droneToChange = await droneService.changeStatus(availableDronesList[i]._id, Enums.DroneStatus.ready);
                     }
 
                 } else {
                     //charge drones if there are in Warehouse with no enough capacity and add 20 min to the warehouse time
                 }
             } else {
-                console.log("No Orders could be delivered in such a short time period");
+                console.log("No More Orders could be delivered in such a short time period");
                 break;
             }
             //charge drones and return the first ready with 100% batCharge

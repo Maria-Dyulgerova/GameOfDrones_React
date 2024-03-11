@@ -6,6 +6,7 @@ const baseCustomersUrl = 'http://localhost:3030/jsonstore/customers';
 
 
 
+
 // const unitsPerMin = 1;
 // //as it is in the task 1 min = 1 unit in the map
 // const packingTime = 5;
@@ -188,7 +189,7 @@ export const setOrderDrone = async (orderId, droneId) => {
         drone: droneId
     };
     const result = await edit(orderId, body_json);
-    console.log("changeOrderDrone(...) -> result:");
+    console.log("setOrderDrone(...) -> result:");
     console.log(JSON.stringify(result));
     return result;
 }

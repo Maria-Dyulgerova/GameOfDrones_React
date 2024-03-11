@@ -24,8 +24,7 @@ export default function EstimateOrderListItem({
 
         
     }, []);
-    console.log(JSON.stringify(orderMoreDetails)); 
-
+    
     
     return (
         <tr>

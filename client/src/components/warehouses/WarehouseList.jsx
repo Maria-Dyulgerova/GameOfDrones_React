@@ -5,8 +5,7 @@ import WarehouseListItem from './warehouseListItem';
 
 export default function WarehouseList () {
     
-        // console.log(this.props.orders);
-        const [warehouses, setWarehouses] = useState([]);
+    const [warehouses, setWarehouses] = useState([]);
 
     useEffect(() => {
         warehouseService.getAll()
@@ -19,7 +18,7 @@ export default function WarehouseList () {
                 console.log(err);
             });
     }, []);
-    console.log(warehouses);
+    // console.log(warehouses);
     return (
         
         <section id="catalog-page">
